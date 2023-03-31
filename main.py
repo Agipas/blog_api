@@ -1,10 +1,11 @@
 from fastapi import FastAPI, Depends
 from fastapi_users import FastAPIUsers
+from pydantic import BaseModel
 
 from auth.auth import auth_backend
 from auth.database import User
 from auth.manager import get_user_manager
-from auth.schemas import UserRead, UserCreate
+from auth.schemas import UserRead, UserCreate, FooBar
 
 tags_metadata = [
     {
@@ -51,8 +52,12 @@ app.include_router(
     tags=["auth"],
 )
 
+class Student(BaseModel):
+   id: int
+   name :str
 
-@app.get("/protected-route")
-def protected_route(user: User = Depends(current_active_user)):
+@app.post("/create-post")
+def protected_route(s1: Student, user: User = Depends(current_active_user)):
+    print(dir(user))
     return f"Hello, {user.email}"
 
