@@ -1,26 +1,11 @@
 from datetime import datetime
-
+from sqlalchemy import MetaData
+from sqlalchemy.ext.declarative import declarative_base
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
-from sqlalchemy import MetaData, Table, Column, Integer, String, TIMESTAMP, Boolean
-
-from database import Base
+from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean
 
 metadata = MetaData()
-
-user = Table(
-    "user",
-    metadata,
-    Column("id", Integer, primary_key=True),
-    Column("email", String, nullable=False),
-    Column("username", String, nullable=False),
-    Column("registered_at", TIMESTAMP),
-    Column("last_request", TIMESTAMP),
-    Column("last_login", TIMESTAMP),
-    Column("hashed_password", String, nullable=False),
-    Column("is_active", Boolean, default=True, nullable=False),
-    Column("is_superuser", Boolean, default=False, nullable=False),
-    Column("is_verified", Boolean, default=True, nullable=False), # default was False
-)
+Base = declarative_base(metadata=metadata)
 
 
 class User(SQLAlchemyBaseUserTable[int], Base):

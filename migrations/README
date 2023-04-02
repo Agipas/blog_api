@@ -1,0 +1,8 @@
+Generic single-database configuration.
+
+alembic revision — autogenerate -m “First commit”
+alembic upgrade head
+    or alembic upgrade 'revision_id'
+
+
+alembic revision — autogenerate -m 'message'
