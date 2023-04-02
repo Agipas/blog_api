@@ -121,7 +121,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+../.env
 .venv
 env/
 venv/
@@ -162,5 +162,8 @@ cython_debug/
 .idea
 /test_main.http
 /db.sqlite
-/migrations/versions/
+/src/migrations/versions/
 !/venv_3.8/lib/python3.8/site-packages/fastapi_users/schemas.py
+../db.sqlite
+../venv
+../venv_3.8

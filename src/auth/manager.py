@@ -4,7 +4,8 @@ from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, IntegerIDMixin, schemas, models, exceptions
 
-from auth.database import User, get_user_db
+from auth.models import User
+from auth.utils import get_user_db
 from config import SECRET
 
 
@@ -14,6 +15,21 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         print(f"User {user.username} has registered.")
+
+    async def get_by_email(self, user_email: str) -> models.UP:
+        """
+        Get a user by e-mail.
+
+        :param user_email: E-mail of the user to retrieve.
+        :raises UserNotExists: The user does not exist.
+        :return: A user.
+        """
+        user = await self.user_db.get_by_email(user_email)
+
+        if user is None:
+            raise exceptions.UserNotExists()
+
+        return user
 
     async def create(
         self,

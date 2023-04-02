@@ -21,10 +21,3 @@ class UserCreate(CreateUpdateDictModel):
     username: str
     email: str
     password: str
-
-from pydantic import BaseModel
-
-
-class FooBar(BaseModel):
-    count: int
-    size: float = None
