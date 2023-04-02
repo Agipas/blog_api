@@ -1,4 +1,5 @@
-from datetime import datetime
+from dataclasses import dataclass
+from datetime import datetime, date
 
 from pydantic import BaseModel
 
@@ -12,6 +13,11 @@ class LikePost(BaseModel):
     id: int
 
 
+class PostAnalytics(BaseModel):
+    date_from: date
+    date_to: date
+
+
 class PostRead(BaseModel):
     id: int
     text: str
@@ -20,3 +26,9 @@ class PostRead(BaseModel):
     created_at: str
     updated_at: str
     user_id: int
+
+
+@dataclass
+class Posts:
+    date: date
+    numbers: int
