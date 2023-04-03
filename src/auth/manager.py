@@ -61,7 +61,8 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     async def on_after_login(
         self, user: models.UP, request: Optional[Request] = None
     ) -> None:
-        await self.user_db.update(user, {"last_login": datetime.utcnow()})
+        time = datetime.utcnow()
+        await self.user_db.update(user, {"last_login": time, "last_request": time})
 
 
 async def get_user_manager(user_db=Depends(get_user_db)):

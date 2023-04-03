@@ -1,4 +1,3 @@
-import uuid
 from typing import Generic
 from datetime import datetime
 
