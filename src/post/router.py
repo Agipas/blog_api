@@ -17,6 +17,15 @@ routr = APIRouter(
 )
 
 
+@routr.get("/all/")
+async def get_all_posts(session: AsyncSession = Depends(get_async_session),
+                        user: User = Depends(current_user)):
+    await user_logs(session, user)
+    result = await session.execute(select(Post))
+    posts = result.scalars().all()
+    return posts
+
+
 @routr.post("/")
 async def create_post(new_post: PostCreate,
                       session: AsyncSession = Depends(get_async_session),
@@ -57,7 +66,7 @@ async def unlike_post(post_id: int,
     dislikes += 1
     stmt = update(Post).values(dislikes=dislikes, updated_at=datetime.utcnow()).where(Post.id == post_id)
     await session.execute(stmt)
-    stmt = insert(PostLogs).values(dislike=True, created_at=datetime.utcnow(), post_id=post_id)
+    stmt = insert(PostLogs).values(dislikes=True, created_at=datetime.utcnow(), post_id=post_id)
     await session.execute(stmt)
     await session.commit()
     return {"status": "success"}

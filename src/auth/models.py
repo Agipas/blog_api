@@ -1,11 +1,7 @@
 from datetime import datetime
-from sqlalchemy import MetaData
-from sqlalchemy.ext.declarative import declarative_base
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable
 from sqlalchemy import Column, Integer, String, TIMESTAMP, Boolean
-
-metadata = MetaData()
-Base = declarative_base(metadata=metadata)
+from database import Base
 
 
 class User(SQLAlchemyBaseUserTable[int], Base):

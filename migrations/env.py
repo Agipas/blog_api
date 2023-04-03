@@ -10,8 +10,7 @@ from alembic import context
 
 sys.path.append(os.path.join(sys.path[0], "src"))
 
-from src.post.models import Base as metadata_post
-from src.auth.models import Base as metadata_auth
+from src.base import Base
 from src.config import DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASS
 
 # this is the Alembic Config object, which provides
@@ -34,7 +33,7 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-target_metadata = [metadata_post.metadata, metadata_auth.metadata]
+target_metadata = Base.metadata
 
 
 # other values from the config, defined by the needs of env.py,
