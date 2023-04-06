@@ -100,11 +100,11 @@ async def create_posts(users_set):
 
 
 async def like_posts(users_set):
-    tasks = []
     for user in users_set:
+        tasks = []
         last_post = await user.get_last_post()
         tasks.extend([user.like_posts(random.randint(1, last_post)) for i in range(0, MAX_LIKES_PER_USER)])
-    await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks)
 
 
 async def main():
