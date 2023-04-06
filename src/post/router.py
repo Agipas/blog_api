@@ -95,3 +95,13 @@ async def get_posts_analytics(date_from: date,
     result = await session.execute(query)
     posts = result.all()
     return [{post[0]: post[1]} for post in posts]
+
+
+@routr.get("/get_last_post/")
+async def get_last_post(session: AsyncSession = Depends(get_async_session),
+                          user: User = Depends(current_user)):
+    await user_logs(session, user)
+    query = select(Post.id).order_by(Post.id.desc()).limit(1)
+    result = await session.execute(query)
+    last_post = result.scalars().all()
+    return last_post

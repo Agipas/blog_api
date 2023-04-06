@@ -169,3 +169,4 @@ migrations/versions/
 ../venv_3.8
 /.env
 /venv
+!/automated_bot/.env.bot
